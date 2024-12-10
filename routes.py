@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends
 from crouton import SQLAlchemyCRUDRouter
-from .models import ItemModel, ItemCreate, Item
-from .db import get_db
+from models import ItemModel, ItemCreate, Item
+from db import get_db
 from pydantic import create_model
 
 router = APIRouter()
