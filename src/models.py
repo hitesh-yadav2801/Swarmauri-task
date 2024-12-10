@@ -1,6 +1,7 @@
 from sqlalchemy import Column, Integer, String, Float
 from sqlalchemy.ext.declarative import declarative_base
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict, Field
+from typing import Optional
 
 Base = declarative_base()
 
@@ -11,13 +12,16 @@ class ItemModel(Base):
     name = Column(String, index=True)
     price = Column(Float)
 
-# Pydantic model 
-class ItemCreate(BaseModel):
+# Pydantic models
+class ItemBase(BaseModel):
     name: str
     price: float
 
-class Item(ItemCreate):
-    id: int
+class ItemCreate(ItemBase):
+    pass
 
-    class Config:
-        orm_mode = True
+class Item(ItemBase):
+    id: Optional[int] = None
+    
+    # Pydantic v2 configuration
+    model_config = ConfigDict(from_attributes=True)
